@@ -11,12 +11,11 @@ services:
     restart: unless-stopped
 
   localstack:
-    image: localstack/localstack:latest
+    image: localstack/localstack:3.0.2
     container_name: localstack
     ports:
       - "4566:4566"
     environment:
-      - SERVICES=s3,sns,sqs
       - DEBUG=1
       - DOCKER_HOST=unix:///var/run/docker.sock
     volumes:
