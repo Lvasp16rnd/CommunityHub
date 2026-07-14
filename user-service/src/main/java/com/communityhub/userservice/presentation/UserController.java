@@ -1,6 +1,7 @@
 package com.communityhub.userservice.presentation;
 
 import com.communityhub.userservice.application.UserService;
+import com.communityhub.userservice.presentation.dto.TokenResponseDTO;
 import com.communityhub.userservice.presentation.dto.UserLoginDTO;
 import com.communityhub.userservice.presentation.dto.UserRegistrationDTO;
 import jakarta.validation.Valid;
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@Valid @RequestBody UserLoginDTO dto) {
+    public ResponseEntity<TokenResponseDTO> login(@Valid @RequestBody UserLoginDTO dto) {
 
         var usernamePassword = new UsernamePasswordAuthenticationToken(dto.email(), dto.password());
         var auth = authenticationManager.authenticate(usernamePassword);
@@ -42,7 +43,7 @@ public class UserController {
 
         String token = tokenService.generateToken(emailAuthenticated);
 
-        return ResponseEntity.ok(token);
+        return ResponseEntity.ok(new TokenResponseDTO(token));
     }
 
 }
