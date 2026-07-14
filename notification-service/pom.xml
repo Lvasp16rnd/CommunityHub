@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.communityhub</groupId>
-	<artifactId>incident-service</artifactId>
+	<artifactId>notification-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name/>
 	<description/>
@@ -48,21 +48,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- Spring Cloud AWS (S3) -->
+		<!-- Spring Cloud AWS (SQS) - Para escutar a fila -->
 		<dependency>
 			<groupId>io.awspring.cloud</groupId>
-			<artifactId>spring-cloud-aws-starter-s3</artifactId>
+			<artifactId>spring-cloud-aws-starter-sqs</artifactId>
 			<version>3.1.1</version>
 		</dependency>
-				<!-- Spring Cloud AWS (SNS) - Para GRITAR no tópico -->
-		<dependency>
-			<groupId>io.awspring.cloud</groupId>
-			<artifactId>spring-cloud-aws-starter-sns</artifactId>
-			<version>3.1.1</version>
-		</dependency>
-
 	</dependencies>
-
 
 	<build>
 		<plugins>

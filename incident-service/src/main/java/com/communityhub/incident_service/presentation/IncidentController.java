@@ -14,16 +14,21 @@ import com.communityhub.incident_service.infrastructure.IncidentRepository;
 import com.communityhub.incident_service.infrastructure.S3StorageService;
 import com.communityhub.incident_service.domain.IncidentStatus;
 
+import io.awspring.cloud.sns.core.SnsTemplate;
+
 @RestController
 @RequestMapping("/api/incidents")
 public class IncidentController {
 
     private final S3StorageService s3StorageService;
     private final IncidentRepository incidentRepository;
+    private final SnsTemplate snsTemplate;
 
-    public IncidentController(S3StorageService s3StorageService, IncidentRepository incidentRepository) {
+    public IncidentController(S3StorageService s3StorageService, IncidentRepository incidentRepository,
+            SnsTemplate snsTemplate) {
         this.s3StorageService = s3StorageService;
         this.incidentRepository = incidentRepository;
+        this.snsTemplate = snsTemplate;
     }
 
     @PostMapping
@@ -43,8 +48,11 @@ public class IncidentController {
                 IncidentStatus.OPEN,
                 LocalDateTime.now());
 
-        // Salva no banco e retorna o objeto salvo
-        return incidentRepository.save(incident);
+        Incident savedIncident = incidentRepository.save(incident);
+
+        snsTemplate.convertAndSend("incident-events-topic", savedIncident);
+
+        return savedIncident;
     }
 
 }
