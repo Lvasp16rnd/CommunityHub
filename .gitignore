@@ -1,4 +1,4 @@
-./markdowns/
+/markdowns/
 .idea/
 .vscode/
 *.iml
