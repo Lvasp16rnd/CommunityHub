@@ -31,7 +31,7 @@ public class IncidentController {
         this.snsTemplate = snsTemplate;
     }
 
-    @PostMapping
+    @PostMapping(consumes = org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE)
     public Incident createIncident(
             @RequestPart("title") String title,
             @RequestPart("description") String description,
